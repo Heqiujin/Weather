@@ -19,6 +19,7 @@
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -37,10 +38,10 @@
             </intent-filter>
         </activity>
 
-        <provider
-            android:name="org.litepal.LitePalContentProvider"
-            android:authorities="${applicationId}.litepal.provider"
-            android:exported="false" />
+<!--        <provider-->
+<!--            android:name="org.litepal.LitePalContentProvider"-->
+<!--            android:authorities="${applicationId}.litepal.provider"-->
+<!--            android:exported="false" />-->
     </application>
 
 </manifest>

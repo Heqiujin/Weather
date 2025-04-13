@@ -20,6 +20,8 @@ import com.example.weather.database.Province;
 import com.example.weather.utils.HttpUtil;
 import com.example.weather.utils.Utility;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
