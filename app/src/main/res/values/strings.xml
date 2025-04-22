@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="forcast_text">预报</string>
+    <string name="forecast_text">预报</string>
 </resources>

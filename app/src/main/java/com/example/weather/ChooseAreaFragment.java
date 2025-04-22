@@ -1,12 +1,14 @@
 package com.example.weather;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +39,8 @@ public class ChooseAreaFragment extends Fragment {
     public static final int LEVEL_COUNTY = 2;
     private ProgressDialog progressDialog;
     private TextView titleText;
-    private Button backButton;
+//    private Button backButton;
+    private ImageView backButton;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> dataList = new ArrayList<>();
@@ -78,6 +81,20 @@ public class ChooseAreaFragment extends Fragment {
             }else if (currentLevel == LEVEL_CITY){
                 selectedCity = cityList.get(position);
                 queryCounties();
+            }else if (currentLevel ==  LEVEL_COUNTY){
+                String weatherId = countyList.get(position).getWeatherId();
+                if (getActivity() instanceof MainActivity) {
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
+                }else if (getActivity() instanceof WeatherActivity){
+                    WeatherActivity activity = (WeatherActivity) getActivity();
+                    activity.closeDrawerAndRequestWeather(weatherId);
+                    activity.drawerLayout.closeDrawers();
+                    activity.swipeRefresh.setRefreshing(true);
+                    activity.requestWeather(weatherId);
+                }
             }
         });
         backButton.setOnClickListener(view -> {
@@ -166,7 +183,7 @@ public class ChooseAreaFragment extends Fragment {
                 } else if ("county".equals(type)) {
                     result = Utility.handleCountyResponse(responseText, selectedCity.getId());
                 }
-                if (result) {
+                if (result && isAdded() && getActivity() != null) {
                     requireActivity().runOnUiThread(() -> {
                         closeProgressDialog();
                         if ("province".equals(type)) {
