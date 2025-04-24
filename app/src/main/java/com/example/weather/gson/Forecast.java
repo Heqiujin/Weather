@@ -11,7 +11,7 @@ public class Forecast {
     public Temperature temperature;
 
     @SerializedName("cond")
-    public Now.More more;
+    public More more;
 
     public class Temperature {
         public String max;
